@@ -23,7 +23,7 @@ INSERT INTO Category_karma (Category_Name) VALUES
 ('Cooking (53)'),
 ('Beverages (24)');
 
-INSERT INTO Products_karma (id_category, Product_name, prix_product, Image_name) VALUES
+INSERT INTO Produit_karma (id_category, Product_name, prix_product, Image_name) VALUES
 (1, 'Sunstar Fresh Melon Juice', 4.5, 20, 18.00, "thumb-orange-juice.png"),
 (6, 'Crunchy Cookie', 5, 15, 25.00, "thumb-biscuits.png"),
 (1, 'Cumcumber', 3, 30, 10.00, "thumb-cucumber.png"),
