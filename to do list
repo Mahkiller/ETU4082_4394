@@ -10,7 +10,8 @@ Catégorie(=accueil)
         -transformation category.html en category.php(5s)(lucas)
     •Connexion (1mn)
     •Fonction liste catégorie (5mn)
-        -Fonction getcategory
+        (ok) -Fonction getcategory (mahery)
     •Appel fonction (1mn)
     •Code php menu (3mn)
         -utilisation js
+            -
