@@ -32,3 +32,15 @@ Single_product
     •(ok) Appel fonction (1mn)(mahery)
     •(ok) Affichage et fonctionnement de la page details (lucas) (3mn)
     •(ok) Amelioration du navbar (lucas) (2mn)
+
+BackOffice
+    •(ok) Préparation (5mn)
+
+Page Ajout Produit
+    •(ok) Préparation (1mn)
+    •(wip) Créer la page pour l'/'ajout du produit (3mn)(lucas)
+    •(wip) Créer les fonction pour pouvoir publier un produit (15mn)(mahery)
+        -une fonction insert into pour inserer dans la base
+        -une fonction upload pour upload le produit en question
+    •(wip) Créer une page pour lister les Produit (3mn)(lucas)
+    •(wip) Créer les fonction pour pouvoir lister les produit (5mn)(mahery)
