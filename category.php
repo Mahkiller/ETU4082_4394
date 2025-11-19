@@ -8,7 +8,6 @@ require_once "inc/fonction.php";
 $categories = getCategories($DBH);
 
 $catId = isset($_GET['cat']) ? intval($_GET['cat']) : null;
-// Only load featured products when no category is selected (initial page view)
 if ($catId) {
 	$stmt = $DBH->prepare("SELECT * FROM Produit_karma WHERE id_category = ?");
 	$stmt->execute([$catId]);

@@ -13,7 +13,6 @@ function getProducts($DBH) {
 }
 
 function getFeaturedProducts($DBH) {
-    // Pour la page d'accueil : 1 produit phare par catégorie
     $sql = "
         SELECT p.* 
         FROM Produit_karma p
@@ -29,7 +28,6 @@ function getFeaturedProducts($DBH) {
 }
 
 function getProductsByCategory($DBH, $categoryId) {
-    // Pour une catégorie spécifique : tous les produits ou 3 aléatoires
     $sql = "SELECT * FROM Produit_karma WHERE id_category = ? ORDER BY RAND() LIMIT 3";
     $query = $DBH->prepare($sql);
     $query->execute([$categoryId]);
