@@ -5,8 +5,6 @@ $categories = getCategories($DBH);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-<!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
 <head>
@@ -36,32 +34,68 @@ $categories = getCategories($DBH);
     <link rel="stylesheet" href="css/nice-select.css">
     <link rel="stylesheet" href="css/nouislider.min.css">
     <link rel="stylesheet" href="css/main.css">
-<style>
-.single-product {
-	min-height: 420px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	box-sizing: border-box;
-	background: #fff;
-	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-	padding: 15px;
-	margin-bottom: 20px;
-}
-.single-product img {
-	max-height: 200px;
-	object-fit: contain;
-	margin: 0 auto 10px auto;
-	display: block;
-}
-.product-details {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-</style>
+    <style>
+        /* Espacement pour le navbar fixe */
+        body {
+            padding-top: 100px;
+        }
+        
+        .form-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 40px;
+            margin-top: 40px;
+        }
+        
+        /* Reset des styles de formulaire */
+        .form-group {
+            margin-bottom: 25px;
+            clear: both;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+            width: 100%;
+        }
+        
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: block;
+        }
+        
+        .form-control:focus {
+            border-color: #4d4d4d;
+            box-shadow: 0 0 0 2px rgba(77, 77, 77, 0.1);
+        }
+        
+        .primary-btn {
+            padding: 12px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Assurer que les éléments sont sur des lignes séparées */
+        .form-group > * {
+            display: block;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 	<?php include 'inc/navbarre.php'; ?>
@@ -70,13 +104,16 @@ $categories = getCategories($DBH);
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 col-md-8">
-					<div class="single-product" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 30px; margin-top: 40px;">
+					<div class="form-container">
 						<h2 class="text-center mb-4" style="font-weight:700;">Insérer un nouveau produit</h2>
 						<form action="process-insert-product.php" method="POST" enctype="multipart/form-data">
+							<!-- Nom du produit -->
 							<div class="form-group">
 								<label for="product_name">Nom du produit</label>
-								<input type="text" class="form-control" id="product_name" name="product_name" required>
+								<input type="text" class="form-control" id="product_name" name="product_name" required placeholder="Entrez le nom du produit">
 							</div>
+							
+							<!-- Catégorie -->
 							<div class="form-group">
 								<label for="category_id">Catégorie</label>
 								<select class="form-control" id="category_id" name="category_id" required>
@@ -86,32 +123,51 @@ $categories = getCategories($DBH);
 									<?php endforeach; ?>
 								</select>
 							</div>
+							
+							<!-- Prix -->
 							<div class="form-group">
-								<label for="price">Prix</label>
-								<input type="number" step="0.01" class="form-control" id="price" name="price" required>
+								<label for="price">Prix (€)</label>
+								<input type="number" step="0.01" class="form-control" id="price" name="price" required placeholder="0.00">
 							</div>
+							
+							<!-- Description -->
 							<div class="form-group">
 								<label for="description">Description</label>
-								<textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+								<textarea class="form-control" id="description" name="description" rows="4" required placeholder="Décrivez le produit..."></textarea>
 							</div>
+							
+							<!-- Stock et Marque -->
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="stock">Stock</label>
+										<input type="number" class="form-control" id="stock" name="stock" required placeholder="Quantité">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="brand">Marque</label>
+										<input type="text" class="form-control" id="brand" name="brand" required placeholder="Nom de la marque">
+									</div>
+								</div>
+							</div>
+							
+							<!-- Poids -->
 							<div class="form-group">
-								<label for="stock">Stock</label>
-								<input type="number" class="form-control" id="stock" name="stock" required>
+								<label for="weight">Poids (kg)</label>
+								<input type="number" step="0.01" class="form-control" id="weight" name="weight" required placeholder="0.00">
 							</div>
-							<div class="form-group">
-								<label for="brand">Marque</label>
-								<input type="text" class="form-control" id="brand" name="brand" required>
-							</div>
-							<div class="form-group">
-								<label for="weight">Poids</label>
-								<input type="number" step="0.01" class="form-control" id="weight" name="weight" required>
-							</div>
+							
+							<!-- Image -->
 							<div class="form-group">
 								<label for="image">Image du produit</label>
 								<input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+								<small class="form-text text-muted">Formats acceptés: JPG, PNG, GIF, WEBP</small>
 							</div>
-							<div class="text-center mt-4">
-								<button type="submit" class="primary-btn" style="padding: 10px 30px; font-size: 18px;">Insérer le produit</button>
+							
+							<!-- Bouton -->
+							<div class="text-center">
+								<button type="submit" class="primary-btn">Insérer le produit</button>
 							</div>
 						</form>
 					</div>

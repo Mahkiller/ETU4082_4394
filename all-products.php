@@ -22,6 +22,11 @@ $products = getProducts($DBH);
     <link rel="stylesheet" href="css/nouislider.min.css">
     <link rel="stylesheet" href="css/main.css">
     <style>
+        /* Espacement pour le navbar fixe */
+        body {
+            padding-top: 100px;
+        }
+        
         .single-product {
             min-height: 420px;
             display: flex;
@@ -33,18 +38,57 @@ $products = getProducts($DBH);
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             padding: 15px;
             margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .single-product:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .single-product img {
             max-height: 200px;
             object-fit: contain;
             margin: 0 auto 10px auto;
             display: block;
+            transition: transform 0.3s ease;
+        }
+        .single-product:hover img {
+            transform: scale(1.05);
         }
         .product-details {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+        }
+        .product-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .primary-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 15px;
+            margin: 0;
+        }
+        .edit-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .edit-icon:hover {
+            background: #f8f9fa;
+        }
+        .edit-icon img {
+            width: 20px;
+            height: 20px;
+            margin: 0;
         }
     </style>
 </head>
@@ -64,10 +108,10 @@ $products = getProducts($DBH);
                             <div class="price">
                                 <h6><?= htmlspecialchars($product['prix_product']) ?> €</h6>
                             </div>
-                            <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="product-actions">
                                 <a href="single-product.php?id=<?= $product['id_product'] ?>" class="primary-btn">Voir le produit</a>
-                                <a href="edit-product.php?id=<?= $product['id_product'] ?>" title="Modifier le produit">
-                                    <img src="img/features/f-icon5.png" alt="Modifier" style="width:32px;height:32px;">
+                                <a href="edit-product.php?id=<?= $product['id_product'] ?>" class="edit-icon" title="Modifier le produit">
+                                    <img src="img/features/f-icon5.png" alt="Modifier">
                                 </a>
                             </div>
                         </div>
