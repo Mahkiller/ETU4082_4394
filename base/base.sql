@@ -18,6 +18,8 @@ CREATE  TABLE Produit_karma(
 INSERT INTO Category_karma (Category_Name) VALUES
 ('Tennis(53)'),
 ('Meat and Fish (53)'),
+('Fruits and Vegetables (53)'),
+('Dairy Products (53)'),
 ('Cooking (53)'),
 ('Beverages (24)');
 
