@@ -20,6 +20,7 @@
 								<ul class="dropdown-menu">
 									<li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
 									<li class="nav-item"><a class="nav-link" href="single-product.php">Product Details</a></li>
+									<li class="nav-item"><a class="nav-link" href="all-products.php">Liste de tous les produits</a></li>
 									<li class="nav-item"><a class="nav-link" href="checkout.php">Product Checkout</a></li>
 									<li class="nav-item"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
 									<li class="nav-item"><a class="nav-link" href="confirmation.php">Confirmation</a></li>
