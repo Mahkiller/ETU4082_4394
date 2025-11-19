@@ -12,18 +12,27 @@ function getProducts($DBH) {
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getRandomProductsByCategory($DBH) {
-    $query = $DBH->query("
-        SELECT p.* FROM Produit_karma p
-        JOIN (
+function getFeaturedProducts($DBH) {
+    // Pour la page d'accueil : 1 produit phare par catégorie
+    $sql = "
+        SELECT p.* 
+        FROM Produit_karma p
+        INNER JOIN (
             SELECT id_category, MIN(id_product) as min_id
-            FROM Produit_karma
+            FROM Produit_karma 
             GROUP BY id_category
-        ) as t ON p.id_category = t.id_category
-        GROUP BY p.id_category
-        ORDER BY RAND()
+        ) p2 ON p.id_category = p2.id_category
+        ORDER BY RAND() 
         LIMIT 3
-    ");
+    ";
+    return $DBH->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getProductsByCategory($DBH, $categoryId) {
+    // Pour une catégorie spécifique : tous les produits ou 3 aléatoires
+    $sql = "SELECT * FROM Produit_karma WHERE id_category = ? ORDER BY RAND() LIMIT 3";
+    $query = $DBH->prepare($sql);
+    $query->execute([$categoryId]);
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 

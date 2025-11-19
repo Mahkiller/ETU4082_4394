@@ -1,16 +1,26 @@
 Catégorie(=accueil)
-    •Préparation (5mn)(ok)
-    -Redirection(1mn)(lucas)(ok)
+    •(ok) Préparation (5mn)
+    -(ok) Redirection(1mn)(lucas)
     •Créer base 
-        -Créer Table catégorie (2mn)(mahery)(ok)
+        -(ok) Créer Table catégorie (2mn)(mahery)
             -id_category
             -name_category
-    •Insertion données dans la table (2mn)(ok)
-    •Code php
+    •(ok) Insertion données dans la table (2mn)
+    •(ok) Code php
         -transformation category.html en category.php(5s)(lucas)
-    •Connexion (1mn)
-    •Fonction liste catégorie (5mn)
+    •(ok) Connexion (1mn)(mahery)
+    •(ok) Fonction liste catégorie (5mn) (mahery)
         -Fonction getcategory
-    •Appel fonction (1mn)
+    •(ok) Appel fonction (1mn) (mahery)
     •Code php menu (3mn)
         -utilisation js
+
+Single_product
+    •(ok) Préparation (5mn)
+    •(ok) Créer table produit_details (2mn)(mahery)
+        -id_product
+        -id_category
+        -product_name
+        -prix_product
+        -image_name
+        -description_product

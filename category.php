@@ -7,7 +7,7 @@ require_once "inc/fonction.php";
 
 $categories = getCategories($DBH);
 
-$randomProducts = getRandomProductsByCategory($DBH);
+$randomProducts = getFeaturedProducts($DBH);
 $catId = isset($_GET['cat']) ? intval($_GET['cat']) : null;
 if ($catId) {
 	$stmt = $DBH->prepare("SELECT * FROM Produit_karma WHERE id_category = ?");
