@@ -8,10 +8,10 @@ Catégorie(=accueil)
     •(ok) Insertion données dans la table (2mn)
     •(ok) Code php
         -transformation category.html en category.php(5s)(lucas)
-    •(ok) Connexion (1mn)(mahery)
-    •(ok) Fonction liste catégorie (5mn) (mahery)
-        -Fonction getcategory
-    •(ok) Appel fonction (1mn) (mahery)
+    •Connexion (1mn)
+    •Fonction liste catégorie (5mn)
+        (ok) -Fonction getcategory (mahery)
+    •Appel fonction (1mn)
     •Code php menu (3mn)
         -utilisation js
 
