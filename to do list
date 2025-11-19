@@ -1,0 +1,16 @@
+Catégorie(=accueil)
+    •Préparation (5mn)(ok)
+    -Redirection(1mn)(lucas)(ok)
+    •Créer base 
+        -Créer Table catégorie (2mn)(mahery)(ok)
+            -id_category
+            -name_category
+    •Insertion données dans la table (2mn)(ok)
+    •Code php
+        -transformation category.html en category.php(5s)(lucas)
+    •Connexion (1mn)
+    •Fonction liste catégorie (5mn)
+        -Fonction getcategory
+    •Appel fonction (1mn)
+    •Code php menu (3mn)
+        -utilisation js
