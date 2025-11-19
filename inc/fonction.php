@@ -7,4 +7,9 @@ function getCategories($DBH) {
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getProducts($DBH) {
+    $query = $DBH->query("SELECT * FROM Produit_karma");
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
 ?>
