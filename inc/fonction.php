@@ -36,4 +36,18 @@ function getProductsByCategory($DBH, $categoryId) {
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getProductById($DBH, $productId) {
+    $sql = "
+        SELECT p.*, d.description, d.stock, d.brand, d.weight, c.Category_Name
+        FROM Produit_karma p
+        LEFT JOIN Produit_Details_karma d ON p.id_product = d.id_product
+        LEFT JOIN Category_karma c ON p.id_category = c.Category_ID
+        WHERE p.id_product = ?
+        LIMIT 1
+    ";
+    $stmt = $DBH->prepare($sql);
+    $stmt->execute([$productId]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 ?>

@@ -198,10 +198,12 @@ if ($catId) {
 						<div class="row">
 							<?php foreach($randomProducts as $product): ?>
 						<div class="col-lg-4 col-md-6">
-							<div class="single-product">
-								<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
+								<div class="single-product">
+									<a href="single-product.php?id=<?= urlencode($product['id_product']) ?>">
+										<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
+									</a>
 								<div class="product-details">
-									<h6><?= htmlspecialchars($product['Product_name']) ?></h6>
+										<h6><a href="single-product.php?id=<?= urlencode($product['id_product']) ?>"><?= htmlspecialchars($product['Product_name']) ?></a></h6>
 									<div class="price">
 										<h6>$<?= number_format($product['prix_product'], 2) ?></h6>
 										<h6 class="l-through">$<?= number_format($product['prix_product'] * 1.4, 2) ?></h6>
@@ -241,9 +243,11 @@ if ($catId) {
 						<!-- single product -->
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
-								<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
+								<a href="single-product.php?id=<?= urlencode($product['id_product']) ?>">
+									<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
+								</a>
 								<div class="product-details">
-									<h6><?= htmlspecialchars($product['Product_name']) ?></h6>
+									<h6><a href="single-product.php?id=<?= urlencode($product['id_product']) ?>"><?= htmlspecialchars($product['Product_name']) ?></a></h6>
 									<div class="price">
 										<h6>$<?= number_format($product['prix_product'], 2) ?></h6>
 										<h6 class="l-through">$<?= number_format($product['prix_product'] * 1.4, 2) ?></h6>

@@ -1,3 +1,20 @@
+<?php
+ini_set("display_errors",1);
+require_once __DIR__ . '/inc/connection.php';
+require_once __DIR__ . '/inc/fonction.php';
+
+$productId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$product = null;
+if ($productId > 0) {
+	$product = getProductById($DBH, $productId);
+}
+
+if (!$product) {
+	// produit introuvable : rediriger vers la page catégorie
+	header('Location: category.php');
+	exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -15,7 +32,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop</title>
+		<title>Karma Shop - <?= htmlspecialchars($product['Product_name']) ?></title>
 	<!--
 			CSS
 			============================================= -->
@@ -107,7 +124,7 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Product Details Page</h1>
+					<h1><?= htmlspecialchars($product['Product_name']) ?></h1>
 					<nav class="d-flex align-items-center">
 						<a href="home.html">Home<span class="lnr lnr-arrow-right"></span></a>
 						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
@@ -126,27 +143,25 @@
 				<div class="col-lg-6">
 					<div class="s_Product_carousel">
 						<div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+							<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
 						</div>
 						<div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+							<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
 						</div>
 						<div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+							<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
-						<h3>Faded SkyBlu Denim Jeans</h3>
-						<h2>$149.99</h2>
+						<h3><?= htmlspecialchars($product['Product_name']) ?></h3>
+						<h2>$<?= number_format($product['prix_product'], 2) ?></h2>
 						<ul class="list">
-							<li><a class="active" href="#"><span>Category</span> : Household</a></li>
-							<li><a href="#"><span>Availibility</span> : In Stock</a></li>
+							<li><a class="active" href="category.php?cat=<?= urlencode($product['id_category'] ?? '') ?>"><span>Category</span> : <?= htmlspecialchars($product['Category_Name'] ?? '—') ?></a></li>
+							<li><a href="#"><span>Availibility</span> : <?= (!empty($product['stock']) && $product['stock'] > 0) ? 'In Stock' : 'Out of Stock' ?></a></li>
 						</ul>
-						<p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
-							something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
-							during the winter.</p>
+						<p><?= nl2br(htmlspecialchars($product['description'] ?? 'Aucune description pour ce produit.')) ?></p>
 						<div class="product_count">
 							<label for="qty">Quantity:</label>
 							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
@@ -211,26 +226,10 @@
 							<tbody>
 								<tr>
 									<td>
-										<h5>Width</h5>
+										<h5>Brand</h5>
 									</td>
 									<td>
-										<h5>128mm</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Height</h5>
-									</td>
-									<td>
-										<h5>508mm</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Depth</h5>
-									</td>
-									<td>
-										<h5>85mm</h5>
+										<h5><?= htmlspecialchars($product['brand'] ?? '—') ?></h5>
 									</td>
 								</tr>
 								<tr>
@@ -238,39 +237,31 @@
 										<h5>Weight</h5>
 									</td>
 									<td>
-										<h5>52gm</h5>
+										<h5><?= htmlspecialchars($product['weight'] ?? '—') ?></h5>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<h5>Quality checking</h5>
+										<h5>Stock</h5>
 									</td>
 									<td>
-										<h5>yes</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Freshness Duration</h5>
-									</td>
-									<td>
-										<h5>03days</h5>
+										<h5><?= (isset($product['stock']) ? intval($product['stock']) : '—') ?></h5>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<h5>When packeting</h5>
+										<h5>Price</h5>
 									</td>
 									<td>
-										<h5>Without touch of hand</h5>
+										<h5>$<?= number_format($product['prix_product'], 2) ?></h5>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<h5>Each Box contains</h5>
+										<h5>Product ID</h5>
 									</td>
 									<td>
-										<h5>60pcs</h5>
+										<h5><?= intval($product['id_product']) ?></h5>
 									</td>
 								</tr>
 							</tbody>
