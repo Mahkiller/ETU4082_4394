@@ -23,6 +23,7 @@
 									<li class="nav-item"><a class="nav-link" href="checkout.php">Product Checkout</a></li>
 									<li class="nav-item"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
 									<li class="nav-item"><a class="nav-link" href="confirmation.php">Confirmation</a></li>
+									<li class="nav-item"><a class="nav-link" href="insert-product.php">Ajouter un produit</a></li>
 								</ul>
 							</li>
 							<li class="nav-item submenu dropdown active">
