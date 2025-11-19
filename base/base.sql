@@ -8,7 +8,7 @@ CREATE TABLE Category_karma(
 
 CREATE  TABLE Produit_karma(
     id_product INT PRIMARY KEY AUTO_INCREMENT,
-    id_category INT NOT NULL,
+    id_category INT AUTO_INCREMENT,
     Product_name VARCHAR(100) NOT NULL,
     prix_product FLOAT,
     Image_name VARCHAR(100),
