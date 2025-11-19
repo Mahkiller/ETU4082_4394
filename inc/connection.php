@@ -4,7 +4,7 @@ ini_set("display_errors",1);
 
     try {
         $localhost = "localhost";
-        $dbname="ETU4082";
+        $dbname="ETU4082_4394";
         $user = "root";
         $pass = "";
 
