@@ -38,9 +38,15 @@ BackOffice
 
 Page Ajout Produit
     •(ok) Préparation (1mn)
-    •(wip) Créer la page pour l'/'ajout du produit (3mn)(lucas)
-    •(wip) Créer les fonction pour pouvoir publier un produit (15mn)(mahery)
+    •(ok) Créer la page pour l'/'ajout du produit (3mn)(lucas)
+    •(ok) Créer les fonction pour pouvoir publier un produit (15mn)(mahery)
         -une fonction insert into pour inserer dans la base
         -une fonction upload pour upload le produit en question
-    •(wip) Créer une page pour lister les Produit (3mn)(lucas)
-    •(wip) Créer les fonction pour pouvoir lister les produit (5mn)(mahery)
+    •(ok) Créer une page pour lister les Produit (3mn)(lucas)
+    •(ok) Créer les fonction pour pouvoir lister les produit (5mn)(mahery)
+
+Page Modifier Produit
+    •(ok) Préparation (1mn)
+    •(wip) Mettre une petite icone sur chaque produit (1mn)(lucas)
+    •(wip) Page modification produit (5mn)(lucas)
+    •(wip) Fonction alter table (6mn)(mahery)
