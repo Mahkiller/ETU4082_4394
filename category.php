@@ -6,7 +6,16 @@ require_once "inc/connection.php";
 require_once "inc/fonction.php";
 
 $categories = getCategories($DBH);
-$products = getProducts($DBH);
+
+$randomProducts = getRandomProductsByCategory($DBH);
+$catId = isset($_GET['cat']) ? intval($_GET['cat']) : null;
+if ($catId) {
+	$stmt = $DBH->prepare("SELECT * FROM Produit_karma WHERE id_category = ?");
+	$stmt->execute([$catId]);
+	$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+	$products = getProducts($DBH);
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +48,32 @@ $products = getProducts($DBH);
 	<link rel="stylesheet" href="css/nouislider.min.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
+<style>
+.single-product {
+	min-height: 420px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	box-sizing: border-box;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+	padding: 15px;
+	margin-bottom: 20px;
+}
+.single-product img {
+	max-height: 200px;
+	object-fit: contain;
+	margin: 0 auto 10px auto;
+	display: block;
+}
+.product-details {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+</style>
 </head>
 
 <body id="category">
@@ -139,7 +174,7 @@ $products = getProducts($DBH);
 								<ul class="collapse" id="fruitsVegetable" data-toggle="collapse" aria-expanded="false" aria-controls="fruitsVegetable">
 									<?php foreach($categories as $cat): ?>
 										<li class="main-nav-list child">
-											<a href="#">
+											<a href="?cat=<?= $cat['Category_ID'] ?>">
 												<?= htmlspecialchars($cat['Category_Name']) ?>
 											</a>
 										</li>
@@ -220,8 +255,49 @@ $products = getProducts($DBH);
 					</div>
 				</div>
 				<!-- End Filter Bar -->
+				<!-- Start Produits en vedette -->
+				<section class="lattest-product-area pb-40 category-list">
+					<h3>Produits en vedette</h3>
+					<div class="row">
+						<?php foreach($randomProducts as $product): ?>
+						<div class="col-lg-4 col-md-6">
+							<div class="single-product">
+								<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
+								<div class="product-details">
+									<h6><?= htmlspecialchars($product['Product_name']) ?></h6>
+									<div class="price">
+										<h6>$<?= number_format($product['prix_product'], 2) ?></h6>
+										<h6 class="l-through">$<?= number_format($product['prix_product'] * 1.4, 2) ?></h6>
+									</div>
+									<div class="prd-bottom">
+										<a href="" class="social-info">
+											<span class="ti-bag"></span>
+											<p class="hover-text">add to bag</p>
+										</a>
+										<a href="" class="social-info">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										</a>
+										<a href="" class="social-info">
+											<span class="lnr lnr-sync"></span>
+											<p class="hover-text">compare</p>
+										</a>
+										<a href="" class="social-info">
+											<span class="lnr lnr-move"></span>
+											<p class="hover-text">view more</p>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<?php endforeach; ?>
+					</div>
+				</section>
+				<!-- End Produits en vedette -->
+
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
+					<h3>Liste des produits</h3>
 					<div class="row">
 						<?php foreach($products as $product): ?>
 						<!-- single product -->
@@ -235,7 +311,6 @@ $products = getProducts($DBH);
 										<h6 class="l-through">$<?= number_format($product['prix_product'] * 1.4, 2) ?></h6>
 									</div>
 									<div class="prd-bottom">
-
 										<a href="" class="social-info">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
