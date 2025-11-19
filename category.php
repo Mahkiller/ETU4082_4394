@@ -7,14 +7,15 @@ require_once "inc/fonction.php";
 
 $categories = getCategories($DBH);
 
-$randomProducts = getFeaturedProducts($DBH);
 $catId = isset($_GET['cat']) ? intval($_GET['cat']) : null;
+// Only load featured products when no category is selected (initial page view)
 if ($catId) {
 	$stmt = $DBH->prepare("SELECT * FROM Produit_karma WHERE id_category = ?");
 	$stmt->execute([$catId]);
 	$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
 	$products = getProducts($DBH);
+	$randomProducts = getFeaturedProducts($DBH);
 }
 ?>
 
@@ -190,11 +191,12 @@ if ($catId) {
 					</div>
 				</div>
 				<!-- End Filter Bar -->
-				<!-- Start Produits en vedette -->
-				<section class="lattest-product-area pb-40 category-list">
-					<h3>Produits en vedette</h3>
-					<div class="row">
-						<?php foreach($randomProducts as $product): ?>
+					<!-- Start Produits en vedette (only show when no category selected) -->
+					<?php if (empty($catId) && !empty($randomProducts)): ?>
+					<section class="lattest-product-area pb-40 category-list">
+						<h3>Produits en vedette</h3>
+						<div class="row">
+							<?php foreach($randomProducts as $product): ?>
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
 								<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
@@ -226,9 +228,10 @@ if ($catId) {
 							</div>
 						</div>
 						<?php endforeach; ?>
-					</div>
-				</section>
-				<!-- End Produits en vedette -->
+						</div>
+						</section>
+						<!-- End Produits en vedette -->
+					<?php endif; ?>
 
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
