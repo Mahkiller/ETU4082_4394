@@ -3,7 +3,7 @@ require_once 'inc/connection.php';
 require_once 'inc/fonction.php';
 
 // Fonction d'upload d'image
-function uploadImage($file, $targetDir = 'img/') {
+function uploadImage($file, $productName, $targetDir = 'img/product/') {
     if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
         return false;
     }
@@ -11,7 +11,9 @@ function uploadImage($file, $targetDir = 'img/') {
     if (!in_array($file['type'], $allowedTypes)) {
         return false;
     }
-    $filename = basename($file['name']);
+    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $baseName = strtolower(str_replace(' ', '-', $productName));
+    $filename = $baseName . '.' . $ext;
     $targetPath = $targetDir . $filename;
     if (move_uploaded_file($file['tmp_name'], $targetPath)) {
         return $filename;
@@ -30,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image = $_FILES['image'] ?? null;
 
     // Upload de l'image
-    $image_name = uploadImage($image);
+    $image_name = uploadImage($image, $product_name);
     if (!$image_name) {
         die('Erreur lors de l\'upload de l\'image.');
     }

@@ -243,7 +243,7 @@ if ($catId) {
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
 								<a href="single-product.php?id=<?= urlencode($product['id_product']) ?>">
-									<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
+									<img class="img-fluid" src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>" style="max-width:100%;max-height:200px;object-fit:contain;">
 								</a>
 								<div class="product-details">
 									<h6><a href="single-product.php?id=<?= urlencode($product['id_product']) ?>"><?= htmlspecialchars($product['Product_name']) ?></a></h6>
