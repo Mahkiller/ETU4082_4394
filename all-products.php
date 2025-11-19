@@ -1,6 +1,21 @@
 <?php
 require_once 'inc/connection.php';
 require_once 'inc/fonction.php';
+
+// Traitement de la suppression
+if (isset($_GET['delete_id'])) {
+    $deleteId = intval($_GET['delete_id']);
+    if (deleteProduct($DBH, $deleteId)) {
+        // Redirection vers la page de succès
+        header('Location: success-del.php');
+        exit;
+    } else {
+        // Redirection vers une page d'erreur si besoin
+        header('Location: all-product.php?error=1');
+        exit;
+    }
+}
+
 $products = getProducts($DBH);
 ?>
 <!DOCTYPE html>
@@ -73,7 +88,7 @@ $products = getProducts($DBH);
             padding: 10px 15px;
             margin: 0;
         }
-        .edit-icon {
+        .edit-icon, .delete-icon {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,42 +100,171 @@ $products = getProducts($DBH);
         .edit-icon:hover {
             background: #f8f9fa;
         }
-        .edit-icon img {
+        .delete-icon:hover {
+            background: #ffe6e6;
+        }
+        .edit-icon img, .delete-icon img {
             width: 20px;
             height: 20px;
             margin: 0;
+        }
+        
+        /* Modal de confirmation */
+        .modal-confirm {
+            color: #636363;
+            width: 400px;
+        }
+        .modal-confirm .modal-content {
+            padding: 20px;
+            border-radius: 5px;
+            border: none;
+        }
+        .modal-confirm .modal-header {
+            border-bottom: none;
+            position: relative;
+        }
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 26px;
+            margin: 30px 0 -10px;
+        }
+        .modal-confirm .modal-body {
+            color: #999;
+        }
+        .modal-confirm .modal-footer {
+            border: none;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+        .modal-confirm .btn {
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            min-width: 120px;
+            border: none;
+            margin: 0 5px;
+        }
+        .modal-confirm .btn-danger {
+            background: #f15e5e;
+        }
+        .modal-confirm .btn-danger:hover {
+            background: #ee3535;
+        }
+        .modal-confirm .btn-default {
+            background: #c1c1c1;
+        }
+        .modal-confirm .btn-default:hover {
+            background: #a8a8a8;
+        }
+        
+        /* Message d'erreur */
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Compteur de produits */
+        .product-count {
+            background: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
     <?php include 'inc/navbarre.php'; ?>
+    
     <!-- Section principale -->
     <section class="section_gap">
         <div class="container">
+            <!-- Message d'erreur -->
+            <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+                <div class="error-message">
+                    ❌ Erreur lors de la suppression du produit. Veuillez réessayer.
+                </div>
+            <?php endif; ?>
+            
             <h2 class="text-center mb-4" style="font-weight:700;">Tous les produits</h2>
+            
+            <!-- Compteur de produits -->
+            <div class="product-count">
+                <?php 
+                $productCount = count($products);
+                echo $productCount . " produit" . ($productCount > 1 ? 's' : '') . " disponible" . ($productCount > 1 ? 's' : '');
+                ?>
+            </div>
+            
             <div class="row">
-                <?php foreach($products as $product): ?>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-product">
-                        <img src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
-                        <div class="product-details">
-                            <h6><?= htmlspecialchars($product['Product_name']) ?></h6>
-                            <div class="price">
-                                <h6><?= htmlspecialchars($product['prix_product']) ?> €</h6>
-                            </div>
-                            <div class="product-actions">
-                                <a href="single-product.php?id=<?= $product['id_product'] ?>" class="primary-btn">Voir le produit</a>
-                                <a href="edit-product.php?id=<?= $product['id_product'] ?>" class="edit-icon" title="Modifier le produit">
-                                    <img src="img/features/f-icon5.png" alt="Modifier">
-                                </a>
+                <?php if (empty($products)): ?>
+                    <div class="col-12 text-center">
+                        <div class="alert alert-warning">
+                            <h4>Aucun produit trouvé</h4>
+                            <p>La base de données ne contient aucun produit pour le moment.</p>
+                            <a href="insert-product.php" class="btn btn-primary mt-2">
+                                Ajouter le premier produit
+                            </a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <?php foreach($products as $product): ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product">
+                            <img src="img/product/<?= htmlspecialchars($product['Image_name']) ?>" alt="<?= htmlspecialchars($product['Product_name']) ?>">
+                            <div class="product-details">
+                                <h6><?= htmlspecialchars($product['Product_name']) ?></h6>
+                                <div class="price">
+                                    <h6><?= number_format($product['prix_product'], 2) ?> €</h6>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="single-product.php?id=<?= $product['id_product'] ?>" class="primary-btn">Voir le produit</a>
+                                    <div style="display: flex; gap: 5px;">
+                                        <a href="edit-product.php?id=<?= $product['id_product'] ?>" class="edit-icon" title="Modifier le produit">
+                                            <img src="img/features/f-icon5.png" alt="Modifier">
+                                        </a>
+                                        <a href="#" class="delete-icon" title="Supprimer le produit" 
+                                           onclick="confirmDelete(<?= $product['id_product'] ?>, '<?= htmlspecialchars(addslashes($product['Product_name'])) ?>')">
+                                            <img src="img/features/f-icon6.png" alt="Supprimer">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-confirm">
+                <div class="modal-header flex-column">
+                    <h4 class="modal-title w-100">Confirmer la suppression</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer le produit "<strong id="productName"></strong>" ?</p>
+                    <p>Cette action est irréversible.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a href="#" class="btn btn-danger" id="confirmDeleteBtn">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer-area section_gap">
         <div class="container">
@@ -184,6 +328,7 @@ $products = getProducts($DBH);
             </div>
         </div>
     </footer>
+
     <!-- Scripts -->
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
@@ -195,5 +340,18 @@ $products = getProducts($DBH);
     <script src="js/jquery.magnific-popup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+    function confirmDelete(productId, productName) {
+        // Mettre à jour le modal avec les informations du produit
+        document.getElementById('productName').textContent = productName;
+        
+        // Lien vers la suppression
+        document.getElementById('confirmDeleteBtn').href = '?delete_id=' + productId;
+        
+        // Afficher le modal
+        $('#deleteModal').modal('show');
+    }
+    </script>
 </body>
 </html>

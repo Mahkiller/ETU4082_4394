@@ -47,6 +47,13 @@ Page Ajout Produit
 
 Page Modifier Produit
     •(ok) Préparation (1mn)
-    •(wip) Mettre une petite icone sur chaque produit (1mn)(lucas)
-    •(wip) Page modification produit (5mn)(lucas)
-    •(wip) Fonction alter table (6mn)(mahery)
+    •(ok) Mettre une petite icone sur chaque produit (1mn)(lucas)
+    •(ok) Page modification produit (5mn)(lucas)
+    •(ok) Fonction alter table (6mn)(mahery)
+    •(ok) Design de la page (10mn)(mahery)
+
+Page Supprimer Produit
+    •(ok) Préparation (1mn)
+    •(ok) Mettre une petite icone sur chaque produit (1mn)(lucas)
+    •(ok) Page suppression succes produit (5mn)(lucas)
+    •(ok) Fonction alter table (6mn)(mahery)
